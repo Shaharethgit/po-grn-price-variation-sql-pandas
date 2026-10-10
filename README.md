@@ -105,7 +105,7 @@ Only the tables and columns used by "POs with no GRN (pending)" are shown.
 
 ### SQL
 
-**Query:** [02_pending_po.sql](queries/02_pending_po.sql)
+**Query:** [02_pending_po.sql](queries/02_po_with_no_grn.sql)
 
 **Result:**
 
