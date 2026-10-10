@@ -19,7 +19,8 @@ SQL and pandas analysis of purchase orders, goods receipts and price variations 
 ```mermaid
 erDiagram
     grn_head ||--|{ grn_tran : "grn_no = tran_no"
-    grn_head }o--|| po_tran : "po_no = entry_no"
+    grn_head }o--o{ po_tran : "po_no = entry_no"
+    grn_tran }o--o{ po_tran : "item_code (with po_no = entry_no)"
     um_master ||--o{ grn_tran : "item_code + pack_id"
 
     grn_head {
@@ -46,9 +47,7 @@ erDiagram
         decimal um_units
     }
 ```
-
-Only the tables and columns used by the queries are shown.
-
+Only the tables and columns used by "GRN received more or less than PO qty" are shown.
 ---
 
 ## 01. GRN received more or less than PO qty
