@@ -14,6 +14,16 @@ SQL and pandas analysis of purchase orders, goods receipts and price variations 
 - All quantities are converted to **base units** using the pack conversion (`um_units`), so cartons and pieces compare correctly.
 - Free quantity (FOC) is included on both the PO and GRN sides.
 
+**Logic:**
+- Ordered qty = (PO qty + free qty) x pack units
+- Received qty = GRN qty x pack units + FOC qty
+- All GRNs of a PO are added together, so partial deliveries are compared correctly
+
+## 01. GRN received more or less than PO qty
+
+**Business impact:** Flags over-receipts (overpayment risk) and short receipts (stock-outs, supplier fill problems).
+
+
 ## Schema diagram
 
 ```mermaid
@@ -50,14 +60,6 @@ erDiagram
 Only the tables and columns used by "GRN received more or less than PO qty" are shown.
 ---
 
-## 01. GRN received more or less than PO qty
-
-**Business impact:** Flags over-receipts (overpayment risk) and short receipts (stock-outs, supplier fill problems).
-
-**Logic:**
-- Ordered qty = (PO qty + free qty) x pack units
-- Received qty = GRN qty x pack units + FOC qty
-- All GRNs of a PO are added together, so partial deliveries are compared correctly
 
 ### SQL
 
@@ -76,3 +78,45 @@ Only the tables and columns used by "GRN received more or less than PO qty" are 
 ![GRN qty mismatch pandas result](results/01_grn_qty_mismatch_pandas.png)
 
 Top 15 rows shown, sorted by largest difference. Total: 16,632 PO-item rows compared. The pandas result matches the SQL result (same row count and same Exact, Short and Over counts).
+
+
+---
+
+## 02. POs with no GRN (pending)
+
+**Business impact:** Shows orders placed but never received, so buyers can chase suppliers.
+
+**Tables used:**
+
+```mermaid
+erDiagram
+    po_head ||--o{ grn_head : "entry_no = po_no"
+
+    po_head {
+        varchar entry_no
+    }
+    grn_head {
+        varchar grn_no
+        varchar po_no
+    }
+```
+
+Only the tables and columns used by "POs with no GRN (pending)" are shown.
+
+### SQL
+
+**Query:** [02_pending_po.sql](queries/02_pending_po.sql)
+
+**Result:**
+
+![Pending PO SQL result](results/02_pending_po.png)
+
+### pandas
+
+**Script:** [02_pending_po.py](pandas/02_pending_po.py)
+
+**Result:**
+
+![Pending PO pandas result](results/02_pending_po_pandas.png)
+
+Top 10 rows shown. Total pending POs: 86. SQL and pandas counts match.

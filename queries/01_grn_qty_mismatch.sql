@@ -40,22 +40,3 @@ with c1 as (
      on c1.po_no = c2.entry_no
      and c1.item_code = c2.item_code
       ORDER BY ABS(c1.received_qty - c2.ordered_qty) DESC, c1.po_no ASC, c1.item_code ASC
-    
-
-     
-/* Sample result (first 11 rows):
-po_no        | item_code | ordered_qty | received_qty | diff_qty | status
--------------+-----------+-------------+--------------+----------+-------
-PO0012603906 | 100012791 | 2880        | 1440         | -1440    | Short
-PO0012604581 | 100006513 | 1760        | 440          | -1320    | Short
-PO0012603417 | 100003490 | 1000        | 150          | -850     | Short
-PO0012604943 | 100200008 | 1200        | 400          | -800     | Short
-PO0012603891 | 100006513 | 1320        | 660          | -660     | Short
-PO0012604905 | 100006513 | 1320        | 660          | -660     | Short
-PO0012605214 | 100006513 | 1320        | 660          | -660     | Short
-PO0012603545 | 100010911 | 1152        | 576          | -576     | Short
-PO0012604647 | 100009586 | 576         | 1152         | 576      | Over
-PO0012605217 | 100176250 | 576         | 48           | -528     | Short
-PO0012603289 | 100006513 | 1056        | 528          | -528     | Short
-*/
-  
