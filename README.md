@@ -120,3 +120,67 @@ Only the tables and columns used by "POs with no GRN (pending)" are shown.
 ![Pending PO pandas result](results/02_pending_po_pandas.png)
 
 Top 10 rows shown. Total pending POs: 86. SQL and pandas counts match.
+
+## 03. Same GRN entered twice
+
+**Business impact:** Duplicate entries inflate stock and purchase value and can cause double payment.
+
+**Logic:**
+- Each item is totalled per GRN in base units: received qty = GRN qty x pack units + FOC qty
+- Ordered qty = (PO qty + free qty) x pack units
+- A PO item is flagged when it is received in **more than one GRN** and the **total received is more than the PO quantity**
+
+**Tables used:**
+
+```mermaid
+erDiagram
+    grn_head ||--|{ grn_tran : "grn_no = tran_no"
+    um_master ||--o{ grn_tran : "item_code + pack_id"
+    grn_head }o--o{ po_tran : "po_no = entry_no"
+    grn_tran }o--o{ po_tran : "item_code"
+
+    grn_head {
+        varchar grn_no
+        varchar po_no
+        varchar supp_code
+    }
+    grn_tran {
+        varchar tran_no
+        varchar item_code
+        varchar pack_id
+        decimal grn_qty
+        decimal foc_qty
+    }
+    um_master {
+        varchar item_code
+        varchar pack_id
+        decimal um_units
+    }
+    po_tran {
+        varchar entry_no
+        varchar item_code
+        decimal po_qty
+        decimal fqty
+        decimal um_qty
+    }
+```
+
+Only the tables and columns used by "Same GRN entered twice" are shown.
+
+### SQL
+
+**Query:** [03_duplicate_grn.sql](queries/03_duplicate_grn.sql)
+
+**Result:**
+
+![Duplicate GRN SQL result](results/03_duplicate_grn.png)
+
+### pandas
+
+**Script:** [03_duplicate_grn.py](pandas/03_duplicate_grn.py)
+
+**Result:**
+
+![Duplicate GRN pandas result](results/03_duplicate_grn_pandas.png)
+
+**Finding:** 1 PO with 2 items was received twice, so the total received was exactly double the ordered quantity.
