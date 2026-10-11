@@ -25,44 +25,32 @@ WITH grn as (
 ),
 po as (
 
-   SELECT entry_no,
-     item_code,
-     SUM((po_qty + COALESCE(fqty,0)) * um_qty) as ordered_qty
-     from po_tran 
-     GROUP BY
-     entry_no,
-     item_code 
+    SELECT entry_no,
+       item_code,
+       SUM((po_qty + COALESCE(fqty,0)) * um_qty) as ordered_qty
+       from po_tran 
+       GROUP BY
+       entry_no,
+       item_code 
 ),
 grn_po as (SELECT grn.*,
-     po.ordered_qty
-     from grn INNER JOIN po
-     on grn.po_no = po.entry_no
-     and grn.item_code = po.item_code 
+       po.ordered_qty
+       from grn INNER JOIN po
+       on grn.po_no = po.entry_no
+       and grn.item_code = po.item_code 
 )
 
 
 SELECT po_no,
-    
-     supp_code,
-     item_code,
-
-     COUNT(tran_no) as times_entered ,
-     --MIN(tran_no) as first_grn ,
-    -- max(tran_no) as last_grn,
-     min(ordered_qty) as ordered_qty,
-     sum(received_qty) as tota_received_qty
-
-     --COUNT(tran_no) as times_entered 
-       from grn_po
-     -- group by 
-   --   po_no,
-    --  supp_code,
-   --   item_code
-    --  where received_qty > ordered_qty
+      supp_code,
+      item_code,
+      COUNT(tran_no) as times_entered ,
+      min(ordered_qty) as ordered_qty,
+      sum(received_qty) as tota_received_qty
+      from grn_po
       group by
       po_no,
-      supp_code,
-      
+      supp_code,      
       item_code
       having sum(received_qty) > min(ordered_qty)
       and COUNT(tran_no) > 1
