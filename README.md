@@ -231,3 +231,11 @@ Only the tables and columns used by "Items whose cost price changed this month" 
 **Result:**
 
 ![Price change SQL result](results/04_price_change_month.png)
+
+### pandas
+
+**Script:** [04_price_change_month.py](pandas/04_price_change_month.py)
+
+**Result:**
+
+![Price change pandas result](results/04_price_change_month_pandas.png)
