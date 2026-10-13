@@ -184,3 +184,50 @@ Only the tables and columns used by "Same GRN entered twice" are shown.
 ![Duplicate GRN pandas result](results/03_duplicate_grn_pandas.png)
 
 **Finding:** 1 PO with 2 items was received twice, so the total received was exactly double the ordered quantity.
+
+---
+
+## 04. Items whose cost price changed this month
+
+**Business impact:** Shows cost changes early, so buyers can check margins and renegotiate.
+
+**Logic:**
+- Unit cost = GRN net amount / quantity in base units, per GRN and item
+- Old cost = the item's last GRN cost before the month
+- New cost = the item's latest GRN cost in the month
+- Items where the two differ are listed, with the change and the % change
+
+**Tables used:**
+
+```mermaid
+erDiagram
+    grn_head ||--|{ grn_tran : "grn_no = tran_no"
+    um_master ||--o{ grn_tran : "item_code + pack_id"
+
+    grn_head {
+        varchar grn_no
+        date grn_date
+    }
+    grn_tran {
+        varchar tran_no
+        varchar item_code
+        varchar pack_id
+        decimal grn_qty
+        decimal net_amt
+    }
+    um_master {
+        varchar item_code
+        varchar pack_id
+        decimal um_units
+    }
+```
+
+Only the tables and columns used by "Items whose cost price changed this month" are shown.
+
+### SQL
+
+**Query:** [04_price_change_month.sql](queries/04_price_change_month.sql)
+
+**Result:**
+
+![Price change SQL result](results/04_price_change_month.png)
