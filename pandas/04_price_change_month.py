@@ -3,7 +3,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 engine = create_engine(
-    "mssql+pyodbc://@localhost/555"
+    "mssql+pyodbc://@localhost/db_name"
     "?driver=ODBC+Driver+18+for+SQL+Server"
     "&trusted_connection=yes"
     "&TrustServerCertificate=yes"
@@ -26,11 +26,12 @@ last_month_grn = grn.copy()
 today = pd.to_datetime('2026-09-07')
 month_start = today.replace(day=1)
 month_end = today + pd.offsets.MonthEnd(0)
-last_month_grn = last_month_grn[last_month_grn["grn_date"] < month_start]
+last_month_grn = last_month_grn[last_month_grn["grn_date"] < month_start].copy()
 last_month_grn["old_cost"] = (last_month_grn["net_amt"] / last_month_grn["grn_qty"]).round(2)
 
 this_month_grn = grn.copy()
-this_month_grn = this_month_grn[(this_month_grn["grn_date"] <= month_end)]
+this_month_grn = grn[(grn["grn_date"] >= month_start) &
+                     (grn["grn_date"] < month_end + pd.Timedelta(days=1))].copy()
 this_month_grn["new_cost"] =  (this_month_grn["net_amt"] / this_month_grn["grn_qty"]).round(2)
 last_month_grn = last_month_grn.sort_values(["item_code","grn_date","tran_no"], ascending=[True, False, False])
 last_month_grn = last_month_grn.groupby("item_code").head(1)
@@ -39,7 +40,7 @@ this_month_grn = this_month_grn.groupby("item_code").head(1)
 
 result = this_month_grn.merge(last_month_grn, left_on="item_code", right_on="item_code", how="inner", suffixes=("","_lm")).copy()
 result = result[['item_code','grn_date','old_cost','new_cost']]
-result["cost_diff"] = result["new_cost"] - result["old_cost"]
+result["cost_diff"] = (result["new_cost"] - result["old_cost"]).round(2)
 result["cost_change_pct"] = (((result["new_cost"] - result["old_cost"]) / result["old_cost"]) * 100).round(2)
 result = result.rename(columns={"grn_date" : "change_date"})
 result = result[result["new_cost"] != result["old_cost"]]

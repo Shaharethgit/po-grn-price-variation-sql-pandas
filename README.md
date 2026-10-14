@@ -239,3 +239,57 @@ Only the tables and columns used by "Items whose cost price changed this month" 
 **Result:**
 
 ![Price change pandas result](results/04_price_change_month_pandas.png)
+
+---
+
+## 05. Price change history per item
+
+**Business impact:** Shows how each item's cost moved over time, to spot repeated increases.
+
+**Logic:**
+- Unit cost = GRN net amount / quantity in base units, per GRN and item
+- `LAG()` gives the previous cost of the same item
+- The first cost of each item and every later change are listed
+
+**Tables used:**
+
+```mermaid
+erDiagram
+    grn_head ||--|{ grn_tran : "grn_no = tran_no"
+    um_master ||--o{ grn_tran : "item_code + pack_id"
+    product_master ||--o{ grn_tran : "item_code"
+
+    grn_head {
+        varchar grn_no
+        date grn_date
+    }
+    grn_tran {
+        varchar tran_no
+        varchar item_code
+        varchar pack_id
+        decimal grn_qty
+        decimal net_amt
+    }
+    um_master {
+        varchar item_code
+        varchar pack_id
+        decimal um_units
+    }
+    product_master {
+        varchar item_code
+        varchar item_des
+    }
+```
+
+Only the tables and columns used by "Price change history per item" are shown.
+
+### SQL
+
+**Query:** [05_price_history.sql](queries/05_price_history.sql)
+
+**Result:**
+
+![Price history SQL result](results/05_price_history.png)
+The screenshot shows a sample of the result (8 of 10905 rows)
+
+Unit costs are rounded to 2 decimals, so changes below 0.01 are not shown.

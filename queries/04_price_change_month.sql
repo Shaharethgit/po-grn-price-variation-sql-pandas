@@ -48,8 +48,8 @@ select
 from
 	grn_all
 where
-	YEAR(grn_date) = YEAR(@today)
-	and MONTH(grn_date) = MONTH(@today)
+	grn_date >  EOMONTH(@last_month)
+	and grn_date <= EOMONTH(@today)
 	),
 
 this_month_grn as(
