@@ -236,9 +236,13 @@ Only the tables and columns used by "Items whose cost price changed this month" 
 
 **Script:** [04_price_change_month.py](pandas/04_price_change_month.py)
 
+The screenshot shows a sample of the result
+
 **Result:**
 
 ![Price change pandas result](results/04_price_change_month_pandas.png)
+
+The screenshot shows a sample of the result
 
 ---
 
@@ -290,6 +294,15 @@ Only the tables and columns used by "Price change history per item" are shown.
 **Result:**
 
 ![Price history SQL result](results/05_price_history.png)
-The screenshot shows a sample of the result (8 of 10905 rows)
 
-Unit costs are rounded to 2 decimals, so changes below 0.01 are not shown.
+The screenshot shows only a sample of a few rows from the full result (more than 10,900 rows).
+
+### pandas
+
+**Script:** [05_price_history.py](pandas/05_price_history.py)
+
+**Result:**
+
+![Price history pandas result](results/05_price_history_pandas.png)
+
+The screenshot shows only a sample of a few rows from the full result (more than 10,900 rows).
