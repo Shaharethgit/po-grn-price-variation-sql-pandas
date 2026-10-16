@@ -1,9 +1,15 @@
+# Problem: Items whose cost price changed this month
+# Business impact: Shows cost changes early, so buyers can check margins and renegotiate
+# Logic: unit cost = GRN net amount / base units, per GRN and item;
+# compares the last cost before the month with the latest cost in the month
+
+
 
 import pandas as pd
 from sqlalchemy import create_engine
 
 engine = create_engine(
-    "mssql+pyodbc://@localhost/db_name"
+    "mssql+pyodbc://@localhost/555"
     "?driver=ODBC+Driver+18+for+SQL+Server"
     "&trusted_connection=yes"
     "&TrustServerCertificate=yes"

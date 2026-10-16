@@ -1,4 +1,7 @@
-
+-- Problem: Selling price below cost (negative margin)
+-- Business impact: Shows packs sold at a loss, so prices can be corrected before more margin is lost
+-- Logic: pack cost = last net cost per base unit x pack units;
+-- a pack is listed when its retail price is below its cost
 
 
 SELECT 

@@ -2,6 +2,7 @@
 -- Business impact: Shows cost changes early, so buyers can check margins and renegotiate
 -- Logic: unit cost = GRN net amount / base units, per GRN and item;
 -- compares the last cost before the month with the latest cost in the month
+
 declare @today as date
 set @today = '2026-09-07'
 declare @last_month as date

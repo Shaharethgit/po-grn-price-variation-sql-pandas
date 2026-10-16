@@ -1,7 +1,7 @@
 -- Problem: Price change history per item
 -- Business impact: Shows how each item's cost moved over time, to spot repeated increases
 -- Logic: unit cost = GRN net amount / base units, per GRN and item;
---        LAG() gives the previous cost; the first cost and every later change are listed
+-- LAG() gives the previous cost; the first cost and every later change are listed
 -- Note: costs rounded to 2 decimals; free (FOC) units are not counted in the unit cost
 
 with grn as(

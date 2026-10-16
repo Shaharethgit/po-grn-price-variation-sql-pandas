@@ -1,8 +1,14 @@
+# Problem: Selling price below cost (negative margin)
+# Business impact: Shows packs sold at a loss, so prices can be corrected before more margin is lost
+# Logic: pack cost = last net cost per base unit x pack units;
+# a pack is listed when its retail price is below its cost
+
+
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
 engine = create_engine(
-    "mssql+pyodbc://@localhost/db_name"
+    "mssql+pyodbc://@localhost/555"
         "?driver=ODBC+Driver+18+for+SQL+Server"
         "&trusted_connection=yes"
         "&TrustServerCertificate=yes"

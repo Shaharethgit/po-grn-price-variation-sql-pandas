@@ -1,3 +1,9 @@
+# Problem: Same GRN entered twice
+# Business impact: Duplicate entries inflate stock and purchase value and can cause double payment
+# Logic: ordered_qty  = (po_qty + free qty) x pack units
+# received_qty = grn_qty x pack units + foc qty (totalled per GRN and item)
+# Flagged when the same item on a PO is received in more than one GRN
+# and the total received is more than the PO quantity.
 
 import pandas as pd
 from sqlalchemy import create_engine

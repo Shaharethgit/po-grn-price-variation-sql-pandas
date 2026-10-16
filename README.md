@@ -113,7 +113,7 @@ Only the tables and columns used by "POs with no GRN (pending)" are shown.
 
 ### pandas
 
-**Script:** [02_pending_po.py](pandas/02_pending_po.py)
+**Script:** [02_pending_po.py](pandas/02_po_with_no_grn.py)
 
 **Result:**
 
@@ -353,7 +353,6 @@ Only the tables and columns used by "Selling price below cost (negative margin)"
 ![Negative margin SQL result](results/06_negative_margin.png)
 
 The screenshot shows only a sample of a few rows from the full result. The cost is the latest cost, not the cost when the price was set.
-Only the tables and columns used by "Selling price below cost (negative margin)" are shown.
 
 ### pandas
 

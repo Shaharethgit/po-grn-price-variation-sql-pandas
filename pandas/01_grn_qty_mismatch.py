@@ -1,3 +1,9 @@
+# Problem: GRN received more or less than PO qty
+# Business impact: Flags over-receipts (overpayment) and short receipts (stock-outs)
+# Logic: ordered_qty  = (po_qty + free qty) x pack units
+# received_qty = grn_qty x pack units + foc qty
+# Both in base units; all GRNs of a PO are added together.
+
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine

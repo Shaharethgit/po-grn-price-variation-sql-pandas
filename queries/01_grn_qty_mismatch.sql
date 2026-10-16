@@ -2,8 +2,8 @@
 -- Problem: GRN received more or less than PO qty
 -- Business impact: Flags over-receipts (overpayment) and short receipts (stock-outs)
 -- Logic: ordered_qty  = (po_qty + free qty) x pack units
---        received_qty = grn_qty x pack units + foc qty
---        Both in base units; all GRNs of a PO are added together.
+-- received_qty = grn_qty x pack units + foc qty
+-- Both in base units; all GRNs of a PO are added together.
 with c1 as (
  SELECT a.item_code,
         b.po_no,
