@@ -306,3 +306,61 @@ The screenshot shows only a sample of a few rows from the full result (more than
 ![Price history pandas result](results/05_price_history_pandas.png)
 
 The screenshot shows only a sample of a few rows from the full result (more than 10,900 rows).
+
+---
+
+## 06. Selling price below cost (negative margin)
+
+**Business impact:** Shows packs sold at a loss, so prices can be corrected before more margin is lost.
+
+**Logic:**
+- Pack cost = last net cost per base unit x pack units
+- Compared with the retail price of the same pack
+- A pack is listed when its cost is at least 0.01 above its retail price
+
+**Tables used:**
+
+```mermaid
+erDiagram
+    product_master ||--o{ um_master : "item_code"
+    um_master ||--|| price_level : "item_code + pack_id"
+    product_master ||--o{ price_level : "item_code"
+
+    product_master {
+        varchar item_code
+        decimal last_net_cost
+    }
+    um_master {
+        varchar item_code
+        varchar pack_id
+        decimal um_units
+    }
+    price_level {
+        varchar item_code
+        varchar pack_id
+        decimal retail
+    }
+```
+
+Only the tables and columns used by "Selling price below cost (negative margin)" are shown.
+
+### SQL
+
+**Query:** [06_negative_margin.sql](queries/06_negative_margin.sql)
+
+**Result:**
+
+![Negative margin SQL result](results/06_negative_margin.png)
+
+The screenshot shows only a sample of a few rows from the full result. The cost is the latest cost, not the cost when the price was set.
+Only the tables and columns used by "Selling price below cost (negative margin)" are shown.
+
+### SQL
+
+**Query:** [06_negative_margin.py](queries/06_negative_margin.py)
+
+**Result:**
+
+![Negative margin pandas result](results/06_negative_margin_pandas.png)
+
+The screenshot shows only a sample of a few rows from the full result. The cost is the latest cost, not the cost when the price was set.
