@@ -355,9 +355,9 @@ Only the tables and columns used by "Selling price below cost (negative margin)"
 The screenshot shows only a sample of a few rows from the full result. The cost is the latest cost, not the cost when the price was set.
 Only the tables and columns used by "Selling price below cost (negative margin)" are shown.
 
-### SQL
+### pandas
 
-**Query:** [06_negative_margin.py](queries/06_negative_margin.py)
+**Script:** [06_negative_margin.py](pandas/06_negative_margin.py)
 
 **Result:**
 
