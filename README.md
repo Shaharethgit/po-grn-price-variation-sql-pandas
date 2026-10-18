@@ -363,3 +363,78 @@ The screenshot shows only a sample of a few rows from the full result. The cost 
 ![Negative margin pandas result](results/06_negative_margin_pandas.png)
 
 The screenshot shows only a sample of a few rows from the full result. The cost is the latest cost, not the cost when the price was set.
+
+---
+
+## 07. Supplier-wise delay and fill rate
+
+**Business impact:** Shows which suppliers deliver late or short, so buyers can act on them.
+
+**Logic:**
+- Ordered qty = (PO qty + free qty) x pack units, per PO
+- Received qty = GRN qty x pack units + FOC qty, summed over all GRNs of the PO
+- As-of date is 31 August 2026
+- **Late:** the last GRN came after the expected delivery date
+- **On time:** the last GRN came on or before the expected date
+- **Undelivered:** no GRN, and the expected date has passed
+- **Pending:** no GRN, and not yet due
+- Average delay covers late POs only
+- Fill rate = total received / total ordered, including POs with no GRN
+
+**Tables used:**
+
+```mermaid
+erDiagram
+    po_head ||--|{ po_tran : "entry_no"
+    po_head ||--o{ grn_head : "entry_no = po_no"
+    grn_head ||--|{ grn_tran : "grn_no = tran_no"
+    um_master ||--o{ grn_tran : "item_code + pack_id"
+    supplier ||--o{ po_head : "supp_code"
+
+    supplier {
+        varchar supp_code
+        varchar supp_name
+    }
+    po_head {
+        varchar entry_no
+        varchar supp_code
+        date del_date
+    }
+    po_tran {
+        varchar entry_no
+        decimal po_qty
+        decimal fqty
+        decimal um_qty
+    }
+    grn_head {
+        varchar grn_no
+        varchar po_no
+        date grn_date
+    }
+    grn_tran {
+        varchar tran_no
+        varchar item_code
+        varchar pack_id
+        decimal grn_qty
+        decimal foc_qty
+    }
+    um_master {
+        varchar item_code
+        varchar pack_id
+        decimal um_units
+    }
+```
+
+Only the tables and columns used by "Supplier-wise delay and fill rate" are shown.
+
+### SQL
+
+**Query:** [07_supplier_delay_fill_rate.sql](queries/07_supplier_delay_fill_rate.sql)
+
+**Result:**
+
+![Supplier delay and fill rate SQL result](results/07_supplier_delay_fill_rate.png)
+
+The screenshot shows only a sample of a few rows from the full result.
+
+

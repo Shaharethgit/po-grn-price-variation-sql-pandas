@@ -1,3 +1,9 @@
+-- Problem: Supplier-wise delay and fill rate
+-- Business impact: Shows which suppliers deliver late or short, so buyers can act on them
+-- Logic: per PO, last GRN date vs expected delivery date; fill rate = received / ordered (base units)
+-- Note: as-of date 2026-08-31; POs with no GRN count as undelivered (overdue) or pending (not yet due)
+
+
 declare @today as date
 set @today = '2026-08-31'
 
