@@ -1,7 +1,14 @@
+# Problem: Top 10 suppliers by purchase value
+# Business impact: Shows where most spend sits, to focus negotiations and supplier reviews
+# Logic: sum of GRN net amount per supplier; DENSE_RANK() by purchase value; top 10 kept
+# Note: likely duplicate GRNs from task 03 are not excluded
+
+
+
 import pandas as pd
 from sqlalchemy import create_engine
 engine = create_engine(
-    "mssql+pyodbc://@localhost/555_sha!"
+    "mssql+pyodbc://@localhost/555"
         "?driver=ODBC+Driver+18+for+SQL+Server"
         "&trusted_connection=yes"
         "&TrustServerCertificate=yes"

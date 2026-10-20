@@ -447,3 +447,52 @@ The screenshot shows only a sample of a few rows from the full result.
 
 The screenshot shows only a sample of a few rows from the full result.
 
+---
+
+---
+
+## 08. Top 10 suppliers by purchase value
+
+**Business impact:** Shows where most spend sits, to focus negotiations and supplier reviews.
+
+**Logic:**
+- Purchase value = sum of GRN net amount per supplier
+- `DENSE_RANK()` ranks suppliers by purchase value, and the top 10 are kept
+- `share_pct` is the supplier's share of the total purchase value of all suppliers
+
+**Tables used:**
+
+```mermaid
+erDiagram
+    supplier ||--o{ grn_head : "supp_code"
+
+    supplier {
+        varchar supp_code
+        varchar supp_name
+    }
+    grn_head {
+        varchar grn_no
+        varchar supp_code
+        decimal net_amt
+    }
+```
+
+Only the tables and columns used by "Top 10 suppliers by purchase value" are shown.
+
+### SQL
+
+**Query:** [08_top10_suppliers.sql](queries/08_top10_suppliers.sql)
+
+**Result:**
+
+![Top 10 suppliers SQL result](results/08_top10_suppliers.png)
+
+Purchase values are scaled by a constant factor.
+
+### pandas
+
+**Script:** [08_top10_suppliers.py](pandas/08_top10_suppliers.py)
+
+**Result:**
+
+![Top 10 suppliers pandas result](results/08_top10_suppliers_pandas.png)
