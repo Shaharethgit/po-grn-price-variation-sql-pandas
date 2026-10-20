@@ -8,7 +8,7 @@ import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
 engine = create_engine(
-    "mssql+pyodbc://@localhost/555_sha!"
+    "mssql+pyodbc://@localhost/555"
         "?driver=ODBC+Driver+18+for+SQL+Server"
         "&trusted_connection=yes"
         "&TrustServerCertificate=yes"
