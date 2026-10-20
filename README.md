@@ -437,4 +437,13 @@ Only the tables and columns used by "Supplier-wise delay and fill rate" are show
 
 The screenshot shows only a sample of a few rows from the full result.
 
+### pandas
+
+**Script:** [07_supplier_delay_fill_rate.py](pandas/07_supplier_delay_fill_rate.py)
+
+**Result:**
+
+![Supplier delay and fill rate pandas result](results/07_supplier_delay_fill_rate_pandas.png)
+
+The screenshot shows only a sample of a few rows from the full result.
 
