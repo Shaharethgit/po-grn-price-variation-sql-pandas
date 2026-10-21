@@ -516,6 +516,46 @@ Purchase values are scaled by a constant factor.
 
 **Limits:** Stock is estimated, because no stock table was available. Opening stock, purchase returns, stock adjustments and sales returns are not included, so the result is indicative.
 
+**Tables used:**
+
+```mermaid
+erDiagram
+    pos_sales }o--|| barcode : "barcode"
+    barcode }o--|| um_master : "pack_id"
+    pos_sales }o--o{ um_master : "prod_id = item_code"
+    grn_head ||--|{ grn_tran : "grn_no = tran_no"
+    um_master ||--o{ grn_tran : "item_code + pack_id"
+
+    pos_sales {
+        bigint prod_id
+        varchar barcode
+        decimal qty
+        date tran_date
+    }
+    barcode {
+        varchar barcode
+        varchar pack_id
+    }
+    um_master {
+        varchar item_code
+        varchar pack_id
+        decimal um_units
+    }
+    grn_head {
+        varchar grn_no
+        date grn_date
+    }
+    grn_tran {
+        varchar tran_no
+        varchar item_code
+        varchar pack_id
+        decimal grn_qty
+        decimal foc_qty
+    }
+```
+
+Only the tables and columns used by "Slow-moving items (estimated stock)" are shown.
+
 ### SQL
 
 **Query:** [09_slow_moving_items.sql](queries/09_slow_moving_items.sql)
