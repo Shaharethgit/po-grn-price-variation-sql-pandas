@@ -491,8 +491,41 @@ Purchase values are scaled by a constant factor.
 
 ### pandas
 
+
+
 **Script:** [08_top10_suppliers.py](pandas/08_top10_suppliers.py)
 
 **Result:**
 
 ![Top 10 suppliers pandas result](results/08_top10_suppliers_pandas.png)
+
+Purchase values are scaled by a constant factor.
+
+---
+
+## 09. Slow-moving items (estimated stock)
+
+**Business impact:** Shows stock that is not selling, so it can be discounted or stopped from reordering.
+
+**Logic:**
+- Estimated stock = GRN received - POS sales, in base units
+- An item is listed when its estimated stock is above 0, its last receipt is older than 30 days, and it had no sale in the last 30 days
+- If an item has no sale, the idle days count from its last receipt
+- As-of date is 31 August 2026
+- POS sales of items with no GRN in the data period are ignored, because they cannot affect estimated stock
+
+**Limits:** Stock is estimated, because no stock table was available. Opening stock, purchase returns, stock adjustments and sales returns are not included, so the result is indicative.
+
+### SQL
+
+**Query:** [09_slow_moving_items.sql](queries/09_slow_moving_items.sql)
+
+**Result:**
+
+![Slow-moving items SQL result](results/09_slow_moving_items.png)
+
+The screenshot shows only a sample of a few rows from the full result.
+
+
+
+

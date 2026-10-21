@@ -4,7 +4,6 @@
 # Note: likely duplicate GRNs from task 03 are not excluded
 
 
-
 import pandas as pd
 from sqlalchemy import create_engine
 engine = create_engine(
@@ -13,9 +12,6 @@ engine = create_engine(
         "&trusted_connection=yes"
         "&TrustServerCertificate=yes"
 )
-
-grn_head = pd.read_sql("select * from grn_head", engine)
-supplier = pd.read_sql("select * from supplier", engine)
 
 grn_head = pd.read_sql("select * from grn_head", engine)
 supplier = pd.read_sql("select * from supplier", engine)
