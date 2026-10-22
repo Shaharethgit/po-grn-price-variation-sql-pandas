@@ -566,6 +566,16 @@ Only the tables and columns used by "Slow-moving items (estimated stock)" are sh
 
 The screenshot shows only a sample of a few rows from the full result.
 
+### pandas
+
+**Script:** [09_slow_moving_items.py](pandas/09_slow_moving_items.py)
+
+**Result:**
+
+![Slow-moving items pandas result](results/09_slow_moving_items_pandas.png)
+
+The screenshot shows only a sample of a few rows from the full result.
+
 
 
 
