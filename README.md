@@ -576,6 +576,52 @@ The screenshot shows only a sample of a few rows from the full result.
 
 The screenshot shows only a sample of a few rows from the full result.
 
+---
+
+## 10. Monthly purchase trend
+
+**Business impact:** Shows how purchase spend moves month by month, to spot spikes and plan budgets.
+
+**Logic:**
+- Monthly purchase = sum of GRN net amount, grouped by month
+- Running total = cumulative purchase using `SUM() OVER`
+- Change % = change against the previous month, using `LAG()`
+- Likely duplicate GRNs from task 03 are not excluded
+
+**Tables used:**
+
+```mermaid
+erDiagram
+    grn_head {
+        varchar grn_no
+        date grn_date
+        decimal net_amt
+    }
+```
+
+Only the table and columns used by "Monthly purchase trend" are shown.
+
+### SQL
+
+**Query:** [10_monthly_trend.sql](queries/10_monthly_trend.sql)
+
+**Result:**
+
+![Monthly purchase trend SQL result](results/10_monthly_trend.png)
+
+Purchase values are scaled by a constant factor.
+The screenshot shows only a sample of a few rows from the full result.
+
+### pandas
+
+**Script:** [10_monthly_trend.py](pandas/10_monthly_trend.py)
+
+**Result:**
+
+![Monthly purchase trend pandas result](results/10_monthly_trend_pandas.png)
+
+Purchase values are scaled by a constant factor. 
+The screenshot shows only a sample of a few rows from the full result.
 
 
 
